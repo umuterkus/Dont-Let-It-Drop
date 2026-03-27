@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class Stick : MonoBehaviour
 {
-
-
+  
     void OnMouseDown()
-    {
-        Debug.Log("týklandý");
-        Destroy(gameObject);
+    { 
+        StickHolder.Instance.AddStick(gameObject);
+        gameObject.SetActive(false);
     }
 
 }
