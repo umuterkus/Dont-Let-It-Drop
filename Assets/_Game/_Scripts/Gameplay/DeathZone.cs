@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    public static event Action OnGameOver;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {
-            OnGameOver?.Invoke();
-
+            if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
+            GameManager.Instance.ChangeState(GameManager.GameState.Lose);
         }
 
     }

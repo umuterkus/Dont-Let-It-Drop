@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _gameOverPanel;
@@ -16,26 +18,28 @@ public class UIManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        DeathZone.OnGameOver += HandleGameOver;
-        WinZone.OnLevelCompleted += HandleLevelCompleted;
+        GameManager.OnStateChange += HandleStateChange;
+
     }
 
     private void OnDisable()
     {
-        DeathZone.OnGameOver -= HandleGameOver;
-        WinZone.OnLevelCompleted -= HandleLevelCompleted;
+        GameManager.OnStateChange -= HandleStateChange;
 
     }
 
-    private void HandleGameOver()
+    private void HandleStateChange(GameManager.GameState state)
     {
-        _gameOverPanel.SetActive(true);
-
-    }
-
-    private void HandleLevelCompleted()
-    {
-        _onLevelCompletedPanel.SetActive(true);
+        switch (state)
+        {
+            case GameManager.GameState.Win:
+                _onLevelCompletedPanel.SetActive(true);
+                break;
+            case GameManager.GameState.Lose:
+                _gameOverPanel.SetActive(true);
+                break;
+           
+        }
     }
 
     public void ResetLevel()
