@@ -29,6 +29,11 @@ public class StickHolder : MonoBehaviour
         _sticks.Remove(stick);
     }
 
+    public void ResetStickHolder()
+    {
+        _sticks.Clear();
+    }
+
     public GameObject GetStick()
     {
         if (_sticks.Count > 0)
