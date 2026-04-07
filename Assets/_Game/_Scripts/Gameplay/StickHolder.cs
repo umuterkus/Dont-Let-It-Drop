@@ -1,49 +1,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class StickHolder : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-    public static StickHolder Instance;
-
-    [SerializeField] private List<GameObject> _sticks = new List<GameObject>();
-
-    private void Awake()
+    public class StickHolder : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static StickHolder Instance;
+
+        [SerializeField] private List<GameObject> _sticks = new List<GameObject>();
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
         }
 
-        Instance = this;
-    }
-
-    public void AddStick(GameObject stick)
-    {
-        _sticks.Add(stick);
-    }
-
-    public void RemoveStick(GameObject stick) 
-    {
-        _sticks.Remove(stick);
-    }
-
-    public void ResetStickHolder()
-    {
-        _sticks.Clear();
-    }
-
-    public GameObject GetStick()
-    {
-        if (_sticks.Count > 0)
+        public void AddStick(GameObject stick)
         {
-            GameObject stick = _sticks[0];
-            _sticks.RemoveAt(0);
-            return stick;
+            _sticks.Add(stick);
         }
-        return null;
+
+        public void RemoveStick(GameObject stick) 
+        {
+            _sticks.Remove(stick);
+        }
+
+        public void ResetStickHolder()
+        {
+            _sticks.Clear();
+        }
+
+        public GameObject GetStick()
+        {
+            if (_sticks.Count > 0)
+            {
+                GameObject stick = _sticks[0];
+                _sticks.RemoveAt(0);
+                return stick;
+            }
+            return null;
+        }
     }
-
-
 }

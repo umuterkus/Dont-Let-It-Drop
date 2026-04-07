@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class LevelDataSO : ScriptableObject
+namespace DontLetItFall.ScriptableObjects.LevelData
 {
-
-    public List<GameObject> activeSlots;
-
-
+    [CreateAssetMenu]
+    public class LevelDataSO : ScriptableObject
+    {
+        public List<GameObject> activeSlots;
+    }
 }

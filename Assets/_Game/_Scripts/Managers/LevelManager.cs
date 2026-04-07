@@ -1,52 +1,54 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameManager;
+using DontLetItFall.Gameplay;
 
-public class LevelManager : MonoBehaviour
+namespace DontLetItFall.Managers
 {
-    [SerializeField] private List<GameObject> _levels;
-    private int _currentLevelIndex = 0;
-    public static LevelManager Instance;
-    
-    
-
-    private void Awake()
+    public class LevelManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        [SerializeField] private List<GameObject> _levels;
+        private int _currentLevelIndex = 0;
+        public static LevelManager Instance;
+        
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
         }
 
-        Instance = this;
-    }
-    private void Start()
-    {
-        LoadLevel(0);
-    }
-    public void LoadLevel(int levelIndex)
-    {
-        if (levelIndex < 0 || levelIndex >= _levels.Count)
+        private void Start()
         {
-            Debug.LogError("Invalid level index: " + levelIndex);
-            return;
+            LoadLevel(0);
         }
 
-        foreach (var level in _levels)
+        public void LoadLevel(int levelIndex)
         {
-            level.SetActive(false);
+            if (levelIndex < 0 || levelIndex >= _levels.Count)
+            {
+                Debug.LogError("Invalid level index: " + levelIndex);
+                return;
+            }
+
+            foreach (var level in _levels)
+            {
+                level.SetActive(false);
+            }
+
+            _levels[levelIndex].SetActive(true);
+            _currentLevelIndex = levelIndex;
         }
 
-        _levels[levelIndex].SetActive(true);
-        _currentLevelIndex = levelIndex;
+        public void LoadNextLevel()
+        {
+            LoadLevel(_currentLevelIndex + 1);
+            GameManager.Instance.ChangeState(GameManager.GameState.Playing);
+            StickHolder.Instance.ResetStickHolder();
+        }
     }
-
-    public void LoadNextLevel()
-    {
-        LoadLevel(_currentLevelIndex + 1);
-        GameManager.Instance.ChangeState(GameManager.GameState.Playing);
-        StickHolder.Instance.ResetStickHolder();
-    }
-
 }
