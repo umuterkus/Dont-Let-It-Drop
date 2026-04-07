@@ -1,28 +1,31 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using DontLetItFall.Managers;
 
-public class WinZone : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-    private Coroutine _winCoroutine;
-    
-    private void OnTriggerEnter(Collider other)
+    public class WinZone : MonoBehaviour
     {
-        if (other.CompareTag("Item"))
-            _winCoroutine = StartCoroutine(WinRoutine());
-    }
+        private Coroutine _winCoroutine;
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Item"))
+                _winCoroutine = StartCoroutine(WinRoutine());
+        }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Item") && _winCoroutine != null)
-            StopCoroutine(_winCoroutine);
-    }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Item") && _winCoroutine != null)
+                StopCoroutine(_winCoroutine);
+        }
 
-    private IEnumerator WinRoutine()
-    {
-        yield return new WaitForSeconds(0.6f);
-        if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) yield break;
-        GameManager.Instance.ChangeState(GameManager.GameState.Win);
+        private IEnumerator WinRoutine()
+        {
+            yield return new WaitForSeconds(0.6f);
+            if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) yield break;
+            GameManager.Instance.ChangeState(GameManager.GameState.Win);
+        }
     }
-
 }

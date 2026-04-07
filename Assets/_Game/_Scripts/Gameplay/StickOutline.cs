@@ -1,26 +1,29 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class StickOutline : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-    [SerializeField] private Outline outline;
-    private Tweener _outlineTween;
-
-    private void Start()
+    public class StickOutline : MonoBehaviour
     {
-        _outlineTween = DOTween.To(
-            () => outline.OutlineColor,
-            color => outline.OutlineColor = color,
-            Color.green,
-            2f
-        )
-        .SetLoops(-1, LoopType.Yoyo)
-        .SetEase(Ease.InOutSine);
-    }
+        [SerializeField] private Outline outline;
+        private Tweener _outlineTween;
 
-    public void StopOutline()
-    {
-        _outlineTween?.Kill();
-        outline.enabled = false;
+        private void Start()
+        {
+            _outlineTween = DOTween.To(
+                () => outline.OutlineColor,
+                color => outline.OutlineColor = color,
+                Color.green,
+                2f
+            )
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine);
+        }
+
+        public void StopOutline()
+        {
+            _outlineTween?.Kill();
+            outline.enabled = false;
+        }
     }
 }

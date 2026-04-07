@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
+using DG.Tweening;
+using DontLetItFall.Core;
 
-
-
-
-public class FallingItem : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-    private Rigidbody _rb;
-
-    private void Start()
+    public class FallingItem : MonoBehaviour
     {
-        _rb = GetComponent<Rigidbody>();
-    }
+        private Rigidbody _rb;
 
-    private void OnCollisionEnter(Collision col)
-    {
-        float impact = col.relativeVelocity.magnitude;
-        if (impact < 2f) return;
+        private void Start()
+        {
+            _rb = GetComponent<Rigidbody>();
+        }
 
-        // Ufak yukari kuvvet ver
-        float bounceForce = Mathf.Clamp(impact * 0.3f, 0f, 1.5f);
-        _rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        private void OnCollisionEnter(Collision col)
+        {
+            float impact = col.relativeVelocity.magnitude;
+            if (impact < 2f) return;
 
-        float strength = Mathf.Clamp(impact * 0.05f, 0.1f, 0.3f);
-        GameEvents.TriggerImpact(strength);
+            // Ufak yukari kuvvet ver
+            float bounceForce = Mathf.Clamp(impact * 0.3f, 0f, 1.5f);
+            _rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+
+            float strength = Mathf.Clamp(impact * 0.05f, 0.1f, 0.3f);
+            GameEvents.TriggerImpact(strength);
+        }
     }
 }

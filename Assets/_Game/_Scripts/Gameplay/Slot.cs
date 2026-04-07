@@ -1,37 +1,40 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Slot : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-    public bool IsEmpty { get; private set; } = true;
-
-    private void OnMouseDown()
+    public class Slot : MonoBehaviour
     {
-        if (!IsEmpty) return;
+        public bool IsEmpty { get; private set; } = true;
 
-        GameObject stick = StickHolder.Instance.GetStick();
-        if (stick == null) return;
+        private void OnMouseDown()
+        {
+            if (!IsEmpty) return;
 
-        Vector3 targetPos = transform.position + Vector3.forward * -2f;
-        Vector3 startPos = targetPos + Vector3.back * 5f;
+            GameObject stick = StickHolder.Instance.GetStick();
+            if (stick == null) return;
 
-        stick.transform.position = startPos;
-        stick.SetActive(true);
+            Vector3 targetPos = transform.position + Vector3.forward * -2f;
+            Vector3 startPos = targetPos + Vector3.back * 5f;
 
-        Stick newStick = stick.GetComponent<Stick>();
-        newStick.SetSlot(this);
-        IsEmpty = false;
+            stick.transform.position = startPos;
+            stick.SetActive(true);
 
-        stick.transform.DOMove(targetPos, 0.25f).SetEase(Ease.OutQuad);
-    }
+            Stick newStick = stick.GetComponent<Stick>();
+            newStick.SetSlot(this);
+            IsEmpty = false;
 
-    public void SetEmpty()
-    {
-        IsEmpty = true;
-    }
+            stick.transform.DOMove(targetPos, 0.25f).SetEase(Ease.OutQuad);
+        }
 
-    private void OnDisable()
-    {
-        DOTween.Kill(transform);
+        public void SetEmpty()
+        {
+            IsEmpty = true;
+        }
+
+        private void OnDisable()
+        {
+            DOTween.Kill(transform);
+        }
     }
 }

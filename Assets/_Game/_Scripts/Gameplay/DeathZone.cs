@@ -1,16 +1,18 @@
 using System;
 using UnityEngine;
+using DontLetItFall.Managers;
 
-public class DeathZone : MonoBehaviour
+namespace DontLetItFall.Gameplay
 {
-
-    private void OnTriggerEnter(Collider other)
+    public class DeathZone : MonoBehaviour
     {
-        if (other.CompareTag("Item"))
+        private void OnTriggerEnter(Collider other)
         {
-            if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
-            GameManager.Instance.ChangeState(GameManager.GameState.Lose);
+            if (other.CompareTag("Item"))
+            {
+                if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
+                GameManager.Instance.ChangeState(GameManager.GameState.Lose);
+            }
         }
-
     }
 }

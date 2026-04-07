@@ -1,33 +1,36 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public class CameraScaler : MonoBehaviour
+namespace DontLetItFall.Gameplay.Camera
 {
-    [Header("Resulution Settings")]
-    public Vector2 targetResolution = new Vector2(1080, 1920);
-
-    [SerializeField] private Camera cam;
-    private float targetAspect;
-    private float initialFov;
-
-    void Start()
+    [RequireComponent(typeof(UnityEngine.Camera))]
+    public class CameraScaler : MonoBehaviour
     {
-        targetAspect = targetResolution.x / targetResolution.y;
-        initialFov = cam.fieldOfView;
-        AdjustCameraFOV();
-    }
+        [Header("Resulution Settings")]
+        public Vector2 targetResolution = new Vector2(1080, 1920);
 
-    void AdjustCameraFOV()
-    {
-        float currentAspect = (float)Screen.width / (float)Screen.height;
-        if (currentAspect < targetAspect)
+        [SerializeField] private UnityEngine.Camera cam;
+        private float targetAspect;
+        private float initialFov;
+
+        void Start()
         {
-            float differenceInSize = targetAspect / currentAspect;
-            cam.fieldOfView = 2f * Mathf.Atan(Mathf.Tan(initialFov * Mathf.Deg2Rad * 0.5f) * differenceInSize) * Mathf.Rad2Deg;
+            targetAspect = targetResolution.x / targetResolution.y;
+            initialFov = cam.fieldOfView;
+            AdjustCameraFOV();
         }
-        else
+
+        void AdjustCameraFOV()
         {
-            cam.fieldOfView = initialFov;
+            float currentAspect = (float)Screen.width / (float)Screen.height;
+            if (currentAspect < targetAspect)
+            {
+                float differenceInSize = targetAspect / currentAspect;
+                cam.fieldOfView = 2f * Mathf.Atan(Mathf.Tan(initialFov * Mathf.Deg2Rad * 0.5f) * differenceInSize) * Mathf.Rad2Deg;
+            }
+            else
+            {
+                cam.fieldOfView = initialFov;
+            }
         }
     }
 }

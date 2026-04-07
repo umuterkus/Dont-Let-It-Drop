@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
 
-
-public static class GameEvents
+namespace DontLetItFall.Core
 {
-    public static event Action<float> OnImpact;
-
-    public static void TriggerImpact(float strength)
+    public static class GameEvents
     {
-        OnImpact?.Invoke(strength);
+        public static event Action<float> OnImpact;
+
+        public static void TriggerImpact(float strength)
+        {
+            OnImpact?.Invoke(strength);
+        }
     }
 }
